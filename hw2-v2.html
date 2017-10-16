@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HW 2</title>
+    <style type="text/css">
+	</style>
+</head>
+<body>
+	<select id="games-sorting-criteria">
+	    <option value="recent-release">Most Recent Release</option>
+	    <option value="oldest-release">Oldest Release</option>
+	    <option value="alphabetically">Alphabetically</option>
+	    <option value="reverse-alphabetically">Reverse Alphabetically</option>
+	    <option value="rating">Rating</option>
+	    <option value="genre">Genre</option>
+	</select>
+
+	<select id="games-to-be-displayed">
+	    <option value="1">1</option>
+	    <option value="3">3</option>
+	    <option value="5">5</option>
+	    <option value="10">10</option>
+	</select>
+
+	<!-- Root -->
+	<div id="app-root"></div>
+
+	<!-- JavaScript -->
+	<script type="text/javascript">
+		const appRoot = document.querySelector('#app-root');
+		const sortingCriteria = document.querySelector('#games-sorting-criteria');
+		const gamesToBeDisplayed = document.getElementById('games-to-be-displayed');
+	    const xhr = new XMLHttpRequest();
+	    const data = [];
+	    
+	    xhr.onload = () => {
+	        data.push(...JSON.parse(xhr.responseText).games);
+	        console.log(data);
+
+	        data.forEach(game => {
+	        	renderGame(game);
+	        });
+	        sortingCriteria.addEventListener("change", changeCriteria);
+	    }
+
+	    // Render function
+	    const renderGame = game => {
+	    	const gameData = document.createElement('div');
+	    	let gameHTMLString = '';
+
+	    	// returning keys from object
+	    	// forEach is iterating over those keys
+	    	// [bracket syntax] prop is variable 
+	    	Object.keys(game).forEach(prop => {
+	    		const currentProp = String(game[prop]);
+
+	    		if (currentProp.includes('.jpg') || currentProp.includes('.png')) {
+					gameHTMLString = `${gameHTMLString}<img src="https://mosaic-mock-api.herokuapp.com/${game[prop]}" width="100px"/>`;	    			
+	    		} else {
+	    			gameHTMLString = `${gameHTMLString}<p>${game[prop]}</p>`;	    			
+	    		}
+	    	});
+	    	gameData.innerHTML = gameHTMLString;
+	    	appRoot.appendChild(gameData);
+	    }
+
+	    // Change criteria function
+	    function changeCriteria(e) {
+
+	    	// everytime you have an event, the element that generates the event
+	    	// is called the target, eg. e.target
+	    	const selectedOption = e.target.value;
+
+	    	switch(selectedOption) {
+	    		case 'recent-release':
+	    			console.log(selectedOption);
+	    			break;
+	    		case 'oldest-release':
+	    			console.log(selectedOption);
+	    			break;
+	    		case 'alphabetically':
+	    			console.log(selectedOption);
+	    			console.log(data.sort()); // or maybe something like data.title.sort()?
+	    			return data.sort(); // I think I need to do this on its own line and then just return the array on its own (e.g. return data;), but not sure yet
+	    			break;
+	    		case 'reverse-alphabetically':
+	    			console.log(selectedOption);
+	    			// sort() and then reverse()
+	    			break;
+	    		case 'rating':
+	    			console.log(selectedOption);
+	    			break;
+	    		case 'genre':
+	    			console.log(selectedOption);
+	    			break;
+	    		default:
+	    			break;
+	    	}
+	    }
+
+	    // Re-render when changing criteria. I don't know if I need to do this though?
+	    function changeRender() {
+	    	data.forEach(game => {
+	        	renderGame(game);
+	        });
+	    }
+
+	    xhr.open("GET", "https://mosaic-mock-api.herokuapp.com/api/games", false);
+	    xhr.send();
+	</script>
+</body>
+
+<!-- 
+
+	Look up:
+	- javascript promise (fetch)
+	- addEventListener
+	- immediately invoked function expression - IIFE
+	- use strict
+	- html article
+	- .sort function for array
+
+	// Arrow functions
+    const returnText = name => `${name} is a goofball`;
+    const text = returnText('Jim');
+    console.log(text);
+
+-->
