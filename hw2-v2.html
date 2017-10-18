@@ -80,12 +80,25 @@
 	    			break;
 	    		case 'alphabetically':
 	    			console.log(selectedOption);
-	    			console.log(data.sort()); // or maybe something like data.title.sort()?
-	    			return data.sort(); // I think I need to do this on its own line and then just return the array on its own (e.g. return data;), but not sure yet
+	    			//console.log(data.sort()); // or maybe something like data.title.sort()?
+	    			data.sort(function (a, b){
+	    				let nameA = a.title.toUpperCase();
+	    				let nameB = b.title.toUpperCase();
+	    				if (nameA < nameB) {
+	    					changeRender();
+	    					return -1;
+	    				}
+	    				if (nameA > nameB) {
+	    					changeRender();
+	    					return 1;
+	    				}
+	    				changeRender();
+	    				return 0;
+	    			});
+
 	    			break;
 	    		case 'reverse-alphabetically':
 	    			console.log(selectedOption);
-	    			// sort() and then reverse()
 	    			break;
 	    		case 'rating':
 	    			console.log(selectedOption);
@@ -98,7 +111,7 @@
 	    	}
 	    }
 
-	    // Re-render when changing criteria. I don't know if I need to do this though?
+	    // Re-render when changing criteria
 	    function changeRender() {
 	    	data.forEach(game => {
 	        	renderGame(game);
