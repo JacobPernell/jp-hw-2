@@ -37,11 +37,10 @@
 	        data.push(...JSON.parse(xhr.responseText).games);
 	        console.log(data);
 
-	        data.forEach(game => {
-	        	renderGame(game);
-	        });
-	        sortingCriteria.addEventListener("change", changeCriteria);
-	        //gamesToBeDisplayed.addEventListener("change", changeSortingNumber);
+        	changeCriteria('recent-release');
+	        
+	        sortingCriteria.addEventListener("change", changeCriteriaListener);
+	        gamesToBeDisplayed.addEventListener("change", changeSortingNumber);
 	    }
 
 	    // Render function
@@ -56,28 +55,46 @@
 	    		const currentProp = String(game[prop]);
 
 	    		if (currentProp.includes('.jpg') || currentProp.includes('.png')) {
-					gameHTMLString = `${gameHTMLString}<img src="https://mosaic-mock-api.herokuapp.com/${game[prop]}" width="100px"/>`;	    			
+					gameHTMLString = `${gameHTMLString}<img src="https://mosaic-mock-api.herokuapp.com/${game[prop]}" width="100px"/><hr>`;
 	    		} else {
 	    			gameHTMLString = `${gameHTMLString}<p>${game[prop]}</p>`;	    			
 	    		}
+
 	    	});
 	    	gameData.innerHTML = gameHTMLString;
 	    	appRoot.appendChild(gameData);
 	    }
 
 	    // Change criteria function
-	    function changeCriteria(e) {
+	    function changeCriteriaListener(e) {
 
 	    	// everytime you have an event, the element that generates the event
 	    	// is called the target, eg. e.target
 	    	const selectedOption = e.target.value;
 
+	    	changeCriteria(selectedOption);
+	    }
+
+	    function changeCriteria(selectedOption){
 	    	switch(selectedOption) {
 	    		case 'recent-release':
 	    			console.log(selectedOption);
+	    			data.sort(function (a, b){
+	    				let dateA = Date.parse(a.release_date);
+	    				let dateB = Date.parse(b.release_date);
+	    				return dateA - dateB;
+	    			});
+	    			//console.log(data);
+	    			changeRender();
 	    			break;
 	    		case 'oldest-release':
 	    			console.log(selectedOption);
+	    			data.sort(function (a, b){
+	    				let dateA = Date.parse(a.release_date);
+	    				let dateB = Date.parse(b.release_date);
+	    				return dateB - dateA;
+	    			});
+	    			changeRender();
 	    			break;
 	    		case 'alphabetically':
 	    			console.log(selectedOption);
@@ -92,7 +109,7 @@
 	    				}
 	    				return 0;
 	    			});
-	    			console.log(data);
+	    			// console.log(data);
     				changeRender();
 	    			break;
 	    		case 'reverse-alphabetically':
@@ -108,16 +125,57 @@
 	    				}
 	    				return 0;
 	    			});
-	    			console.log(data);
+	    			// console.log(data);
     				changeRender();
 	    			break;
 	    		case 'rating':
 	    			console.log(selectedOption);
+	    			data.sort(function (a, b){
+	    				let ratingA = a.rating;
+	    				let ratingB = b.rating;
+	    				return ratingA - ratingB;
+	    			});
+	    			//console.log(data);
+    				changeRender();
 	    			break;
 	    		case 'genre':
 	    			console.log(selectedOption);
+	    			data.sort(function (a, b){
+	    				let genreA = a.genre.toUpperCase();
+	    				let genreB = b.genre.toUpperCase();
+	    				if (genreA < genreB) {
+	    					return -1;
+	    				}
+	    				if (genreA > genreB) {
+	    					return 1;
+	    				}
+	    				return 0;
+	    			});
+	    			//console.log(data);
+	    			changeRender();
 	    			break;
 	    		default:
+	    			break;
+	    	}
+	    }
+
+	    function changeSortingNumber(e){
+	    	const selectedOption = e.target.value;
+	    	switch(selectedOption){
+	    		case '1':
+	    			changeRender();
+	    			break;
+	    		case '3':
+	    			changeRender();
+	    			break;
+	    		case '5':
+	    			changeRender();
+	    			break;
+	    		case '10':
+	    			changeRender();
+	    			break;
+	    		default:
+	    			changeRender();
 	    			break;
 	    	}
 	    }
