@@ -41,6 +41,7 @@
 	        	renderGame(game);
 	        });
 	        sortingCriteria.addEventListener("change", changeCriteria);
+	        //gamesToBeDisplayed.addEventListener("change", changeSortingNumber);
 	    }
 
 	    // Render function
@@ -80,25 +81,35 @@
 	    			break;
 	    		case 'alphabetically':
 	    			console.log(selectedOption);
-	    			//console.log(data.sort()); // or maybe something like data.title.sort()?
 	    			data.sort(function (a, b){
 	    				let nameA = a.title.toUpperCase();
 	    				let nameB = b.title.toUpperCase();
 	    				if (nameA < nameB) {
-	    					changeRender();
 	    					return -1;
 	    				}
 	    				if (nameA > nameB) {
-	    					changeRender();
 	    					return 1;
 	    				}
-	    				changeRender();
 	    				return 0;
 	    			});
-
+	    			console.log(data);
+    				changeRender();
 	    			break;
 	    		case 'reverse-alphabetically':
 	    			console.log(selectedOption);
+	    			data.sort(function (a, b){
+	    				let nameA = a.title.toUpperCase();
+	    				let nameB = b.title.toUpperCase();
+	    				if (nameA < nameB) {
+	    					return 1;
+	    				}
+	    				if (nameA > nameB) {
+	    					return -1;
+	    				}
+	    				return 0;
+	    			});
+	    			console.log(data);
+    				changeRender();
 	    			break;
 	    		case 'rating':
 	    			console.log(selectedOption);
@@ -113,6 +124,7 @@
 
 	    // Re-render when changing criteria
 	    function changeRender() {
+	    	appRoot.innerHTML = '';
 	    	data.forEach(game => {
 	        	renderGame(game);
 	        });
