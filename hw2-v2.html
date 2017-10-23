@@ -51,17 +51,14 @@
 	    	// returning keys from object
 	    	// forEach is iterating over those keys
 	    	// [bracket syntax] prop is variable 
-	    	Object.keys(game).forEach((prop, i) => {
+	    	Object.keys(game).forEach(prop => {
 	    		const currentProp = String(game[prop]);
-
-	    		if (i < gamesToBeDisplayed) {
 
 		    		if (currentProp.includes('.jpg') || currentProp.includes('.png')) {
 						gameHTMLString = `${gameHTMLString}<img src="https://mosaic-mock-api.herokuapp.com/${game[prop]}" width="100px"/><hr>`;
 		    		} else {
 		    			gameHTMLString = `${gameHTMLString}<p>${game[prop]}</p>`;	    			
 		    		}
-		    	}
 
 	    	});
 	    	gameData.innerHTML = gameHTMLString;
@@ -188,8 +185,10 @@
 	    // Re-render when changing criteria
 	    function changeRender() {
 	    	appRoot.innerHTML = '';
-	    	data.forEach(game => {
-	        	renderGame(game);
+	    	data.forEach((game, i) => {
+	        	if (i < gamesToBeDisplayed.value) {
+	        		renderGame(game);
+	        	}
 	        });
 	    }
 
