@@ -1,0 +1,67 @@
+body {
+	background-color: #faecdc;
+	text-align: center;
+	font-family: 'Maven Pro', sans-serif;
+	color: white;
+}
+
+select {
+	font-family: 'Pontanto Sans', 'Maven Pro', sans-serif;
+	font-size: 14px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+img {
+	width: 400px;
+	filter: grayscale(100%);
+	transition: all 0.5s ease;
+}
+
+img:hover {
+	filter: grayscale(0%);
+}
+
+h1 {
+
+}
+
+#header-content {
+	background-color: #BE4248;
+	padding: 10px 0px;
+	width: 740px;
+	margin: auto;
+}
+
+#games-sorting-criteria {
+	width: 200px;
+	height: 40px;
+	margin: auto;
+	text-align-last: center;
+	border: 0;
+}
+#games-to-be-displayed {
+	width: 50px;
+	height: 40px;
+	margin: auto;
+	text-align-last: center;
+	border: 0;
+}
+
+#app-root {
+	width: 700px;
+	margin: auto;
+	padding: 5px 20px;
+	background-color: #21374B;
+	animation: 2s ease 0s normal forwards 1 fadein;
+}
+
+@keyframes fadein{
+    0% { opacity:0; }
+    66% { opacity:0; }
+    100% { opacity:1; }
+}

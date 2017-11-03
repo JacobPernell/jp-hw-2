@@ -29,7 +29,7 @@ const appRoot = document.querySelector('#app-root');
 	    		const currentProp = String(game[prop]);
 
 		    		if (currentProp.includes('.jpg') || currentProp.includes('.png')) {
-						gameHTMLString = `${gameHTMLString}<img src="https://mosaic-mock-api.herokuapp.com/${game[prop]}" width="100px"/><hr>`;
+						gameHTMLString = `${gameHTMLString}<img src="https://mosaic-mock-api.herokuapp.com/${game[prop]}"/><hr>`;
 		    		} else {
 		    			gameHTMLString = `${gameHTMLString}<p>${game[prop]}</p>`;	    			
 		    		}
